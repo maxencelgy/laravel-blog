@@ -13,6 +13,8 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+        <!-- Favicons -->
+        <link rel="icon" href="{{ url('favicon-32x32.png') }}">
         <!-- Styles -->
         @livewireStyles
     </head>
