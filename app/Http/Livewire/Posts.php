@@ -7,10 +7,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class Posts extends Component
 {
     use  WithFileUploads;
+    use WithPagination;
 
     public $title;
     public $body;
@@ -24,6 +26,11 @@ class Posts extends Component
     public function showCreatePostModal()
     {
         $this->showModalForm = true;
+    }
+
+    public function updatedShowModalForm()
+    {
+        $this->reset();
     }
 
     public function storePost()
@@ -44,6 +51,7 @@ class Posts extends Component
         $post->image = $image_name;
         $post->save();
         $this->reset();
+        session()->flash('flash.banner', 'Post Created Successfully');
     }
 
     public function showEditPostModal($id)
@@ -82,12 +90,21 @@ class Posts extends Component
            'image' => $this->newImage
         ]);
         $this->reset();
+        session()->flash('flash.banner', 'Post Updated Successfully');
+    }
+
+    public function deletePost($id){
+        $post = Post::find($id);
+        Storage::delete('public/photos/', $post->image);
+        $post->delete();
+        session()->flash('flash.banner', 'Post deleted successfully');
+
     }
 
     public function render()
     {
         return view('livewire.posts', [
-            'posts' => Post::all()
+            'posts' => Post::orderBy('created_at', 'DESC')->paginate(5)
         ]);
     }
 }

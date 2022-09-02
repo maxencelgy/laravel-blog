@@ -1,10 +1,11 @@
-<div class=" mx-auto w-3/4 mt-2">
-    <div class="flex content-center m-2 p-2">
-        <x-jet-button wire:click="showCreatePostModal"> Create Post</x-jet-button>
+<div class="mx-auto w-3/4 mt-2">
+    <x-jet-banner />
+    <div class="flex content-center my-2 p-2">
+        <x-jet-button wire:click="showCreatePostModal" class="bg-green-500"> Create Post</x-jet-button>
     </div>
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <div class="shadow overflow-hidden  bg-gray-600 border-gray-200 sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50 dark:bg-gray-600 dark:text-gray-200">
                     <tr>
@@ -44,15 +45,15 @@
                                 <img class="w-8 h-8 rounded-full" src="{{ asset('storage/photos/'. $post->image) }}"/>
                             </td>
                             <td class="px-6 py-4 text-right text-sm">
-                                <x-jet-button wire:click="showEditPostModal({{ $post->id }})">Edit</x-jet-button>
-                                <x-jet-button>Delete</x-jet-button>
+                                <x-jet-button wire:click="showEditPostModal({{ $post->id }})" class="bg-green-500">Edit</x-jet-button>
+                                <x-jet-button wire:click="deletePost({{ $post->id }})" class="bg-red-500">Delete</x-jet-button>
                             </td>
                         </tr>
                     @endforeach
                     <!-- More items... -->
                     </tbody>
                 </table>
-                <div class="m-2 p-2">Pagination</div>
+                <div class="m-2 p-2">{{ $posts->links() }}</div>
             </div>
         </div>
     </div>
